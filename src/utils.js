@@ -1,8 +1,9 @@
-import "./env";
-
 import { adjectives, nouns } from "./words";
+import dotenv from "dotenv";
+import path from "path";
+dotenv.config({ path: path.resolve(__dirname, ".env") });
+import mgTransport from "nodemailer-mailgun-transport";
 import nodemailer from "nodemailer";
-import sgTransport from "nodemailer-mailgun-transport";
 import jwt from "jsonwebtoken";
 
 export const generateSecret = () => {
@@ -10,33 +11,28 @@ export const generateSecret = () => {
     return `${adjectives[randomNumber]} ${nouns[randomNumber]}`;
 }
 
-export const sendEmail = (email) => {
-    const option = {
+const sendEmail = (email) => {
+    const options = {
         auth: {
-            api_key: process.env.MAILGUN_APIKEY,
-            domain: process.env.MAILGUN_DOMAIN
+            domain: process.env.MAILGUN_DOMAIN,
+            apiKey: process.env.MAILGUN_APIKEY
         }
-    };
-
-    const client = nodemailer.createTransport(sgTransport(option));
-    return client.sendMail(email, (err, info) => {
-        if (err) {
-            console.log(`Error:${err}`);
-        } else {
-            console.log(`Response:${info}`)
-        }
-    });
+    }
+    const client = nodemailer.createTransport(mgTransport(options));
+    return client.sendMail(email);
 }
+
 
 export const sendSecretMail = (address, secret) => {
     const email = {
-        from: "Semicolon",
+        from: "master@semicolon.com",
         to: address,
         subject: "Login Secret for Semicolon🔒",
         html:`Hello! Your login secret word is <Strong>'${secret}'</Strong>. <br/>Copy paste on the app/web 😊`    
     } 
-
     return sendEmail(email);
 }
 
-export const generateToken = (id) => jwt.sign({ id }, process.env.JWT_SECRET);
+export const generateToken = (id) => {
+    return jwt.sign({ id }, process.env.JWT_SECRET);
+}

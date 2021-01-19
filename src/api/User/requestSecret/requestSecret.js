@@ -1,38 +1,11 @@
-import { generateSecret, sendSecretMail } from "../../../utils";
-import { prisma } from "../../../../generated/prisma-client";
+import { prisma } from '../../../../generated/prisma-client';
+import { generateSecret, sendSecretMail } from '../../../utils';
 
-//const { smtpTransport } = require('../../../../config/email');
 
-// export default {
-//     Mutation: {
-//         requestSecret: async (_,args) => {
-//             const loginSecret = generateSecret();
 
-//             const { email } = args;
-
-//             const mailOptions = {
-//                 from: "Semicolon",
-//                 to: email  ,
-//                 subject: "[Semicolon]인증 관련 이메일 입니다",
-//                 text: "Hello! Your login secret word is <Strong>" + loginSecret + "</Strong><br>Copy paste on the app/web 😊"
-//             };
-
-//             try {
-//                 await smtpTransport.sendMail(mailOptions);
-//                 await prisma.updateUser({ data: { loginSecret }, where: { email } });
-//                 return true;
-//             } catch (error) {
-
-//                 console.log(error);
-//                 return false;
-//             }
-//         }
-//     }
-// }
 export default {
     Mutation: {
-        requestSecret: async (_, args, { request }) => {
-            console.log(request);
+        requestSecret: async (_, args) => {
             const { email } = args;
             const loginSecret = generateSecret();
             console.log(loginSecret);
@@ -41,13 +14,12 @@ export default {
                 await prisma.updateUser({ data: { loginSecret }, where: { email } });
                 return true;
             } catch (error) {
-                console.log(error);
+                console.log(error)
                 return false;
-            }           
+            }
         }
     }
 }
-
 //   const auth = {
 //     SendEmail : async(req, res) => {
 //         const number = generateRandom(111111,999999)
