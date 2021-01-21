@@ -19,7 +19,6 @@ export default {
                 .aggregate()
                 .count(),
         followersCount: ({ username }) => {
-            console.log(username)
             return prisma
                 .usersConnection({ where: { following_some: { username } } })
                 .aggregate()
