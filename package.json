@@ -36,6 +36,7 @@
     "deploy": "prisma1 deploy",
     "generate": "prisma1 generate",
     "prisma": "yarn run deploy && yarn run generate",
+    "prebuild":"yarn run prisma",
     "build": "babel src -d build",
     "postbuild":"cd src && yarn copy src/api/**/*.graphql ./build/api"
   }
