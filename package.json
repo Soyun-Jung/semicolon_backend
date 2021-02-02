@@ -12,6 +12,7 @@
     "@babel/preset-env": "^7.12.11",
     "@babel/runtime": "^7.12.5",
     "aws-sdk": "^2.831.0",
+    "axios": "^0.21.1",
     "copy": "^0.3.2",
     "dotenv": "^8.2.0",
     "graphql-tools": "^7.0.2",
@@ -40,6 +41,6 @@
     "prebuild": "yarn run generate",
     "build": "babel src -d build",
     "postbuild": "cd src && yarn copy src/api/**/*.graphql ./build/api",
-    "start":"node build/server.js"
+    "start": "node build/server.js"
   }
 }

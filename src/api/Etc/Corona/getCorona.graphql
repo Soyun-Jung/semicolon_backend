@@ -1,0 +1,8 @@
+type Covid {
+  newCase: String!
+  countryName: String
+}
+
+type Query {
+  covid19(location: String!): Covid!
+}
