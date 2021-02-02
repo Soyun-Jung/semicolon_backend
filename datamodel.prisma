@@ -22,6 +22,12 @@ type User {
   updatedAt: DateTime! @updatedAt
 }
 
+type UserLogin{
+  id: ID! @id
+  email: String! @unique
+  loginSecret:String
+}
+
 type Story {
   id:ID! @id
   files: [File!]!
