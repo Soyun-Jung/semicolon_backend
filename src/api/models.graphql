@@ -16,11 +16,26 @@ type User {
   posts: [Post!]!
   likes: [Like!]!
   comments: [Comment!]!
+  commentLikes: [Comment!]
   rooms: [Room!]!
   loginSecret: String!
   createdAt: String
   updatedAt: String
   postsCount: Int!
+  savedPosts: [Post!]
+  state: String!
+  stories: [Story!]
+  tagedUser: [Story!]
+}
+
+type Story {
+  id: ID!
+  files: [File!]!
+  caption: String
+  user: User!
+  tagUser: [User!]
+  createdAt: String
+  updatedAt: String
 }
 
 type Post {
@@ -36,6 +51,9 @@ type Post {
   likeCount: Int!
   createdAt: String
   updatedAt: String
+  state: String!
+  savedByUser: [User!]
+  hash: [String!]!
 }
 
 type Like {
@@ -53,6 +71,7 @@ type Comment {
   post: Post!
   createdAt: String
   updatedAt: String
+  commentLikes: [User!]
 }
 
 type File {

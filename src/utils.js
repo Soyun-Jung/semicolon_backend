@@ -27,8 +27,10 @@ export const sendSecretMail = (address, secret) => {
     const email = {
         from: "master@semicolon.com",
         to: address,
-        subject: "Login Secret for Semicolon🔒",
-        html:`Hello! Your login secret word is <Strong>'${secret}'</Strong>. <br/>Copy paste on the app/web 😊`    
+        subject: "당신을 위한 시크릿 코드 🔒",
+        html: `안녕하세요 당신만을 위한 특별한 시크릿 코드 😉 <br/> 
+                <Strong>'${secret}'</Strong>입니다. <br/> 
+               입력란에 복사해서 붙여주세요😊`    
     } 
     return sendEmail(email);
 }
