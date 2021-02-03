@@ -19,7 +19,6 @@ type User {
   comments: [Comment!]!
   commentLikes: [Comment!]
   rooms: [Room!]!
-  loginSecret: String!
   createdAt: String
   updatedAt: String
   postsCount: Int!
@@ -27,6 +26,12 @@ type User {
   state: String!
   stories: [Story!]
   tagedUser: [Story!]
+}
+
+type UserLogin {
+  id: ID!
+  email: String!
+  loginSecret: String
 }
 
 type Story {
@@ -63,6 +68,14 @@ type Like {
   post: Post!
   createdAt: String
   updatedAt: String
+}
+
+type CommentLike {
+  id: ID!
+  user: User!
+  comment: Comment!
+  createdAt: String!
+  updatedAt: String!
 }
 
 type Comment {

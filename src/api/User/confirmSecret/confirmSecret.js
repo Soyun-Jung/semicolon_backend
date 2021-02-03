@@ -7,7 +7,7 @@ export default {
             const { email, secret } = args;
             const user = await prisma.user({ email });
             if (user.loginSecret === secret) {
-                return generateToken(user.id);
+                return secret
             } else {
                 throw Error("이메일이랑 비밀번호랑 다름 🤐");
             }

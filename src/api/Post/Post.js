@@ -39,5 +39,26 @@ export default {
         })
         .aggregate()
         .count()
+  },
+  Comment: {
+    isCommented: (parent, _, { request }) => {
+      const { user } = request;
+      const { id } = parent;
+      return prisma.$exists.commentLike({
+        AND: [
+          {
+            user: {
+              id: user.id
+            }
+          },
+          {
+            comment: {
+              id
+            }
+          }
+        ]
+      });
+    }
   }
+    
 };

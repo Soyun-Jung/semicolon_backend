@@ -1,40 +1,23 @@
 import { prisma } from "../../../../generated/prisma-client";
-import { isAuthenticated } from "../../../middlewares";
-
-//굳이 이렇게 써 줄 필요는 없지만 더 안정적임.
-const EDIT = "EDIT";
-const DELETE = "DELETE";
+import { inAuthenticated } from "../../../middlewares"
 
 export default {
-    Mutation:{
-        editPost: async (_, args, { request }) => {
-            isAuthenticated(request);
-            const { caption, location, id, action } = args;
+    Mutation: {
+        editPost: async (_, agrs, { request }) => {
+            inAuthenticated(request);
             const { user } = request;
-            
-            const post = await prisma.$exists.post({                
-                id,
-                user: {
-                    id: user.id
-                }               
-            });
-
+            const { id, caption } = agrs;
+            const post = await prisma.$exists.post({ id, user: { id: user.id } })
+            // 포스트가 있는지 확인하고 지금 로그인 한 유저가 포스트를 만든 유저인지 확인.
             if (post) {
-                if (action === EDIT) {
-                    return prisma.updatePost(
-                        {
-                            data: {
-                                location, caption
-                            },
-                            where: { id }
-                        }
-                    );
-                } else if (action === DELETE) {
-                    return prisma.deletePost({ id });
-                }                
+                await prisma.updatePost({
+                    data: { caption },
+                    where: { id }
+                })
+                return true;
             } else {
-                throw Error();
+                return false
             }
         }
     }
-}
+};
