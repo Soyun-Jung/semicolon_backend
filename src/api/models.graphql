@@ -16,7 +16,7 @@ type User {
   followersCount: Int!
   posts: [Post!]!
   likes: [Like!]!
-  iscommented: Boolean
+  
   comments: [Comment!]!
   commentLikes: [Comment!]
   rooms: [Room!]!
@@ -87,6 +87,7 @@ type Comment {
   createdAt: String
   updatedAt: String
   commentLikes: [User!]
+  isCommented: Boolean
 }
 
 type File {
