@@ -5,10 +5,10 @@ export default {
     Query: { 
         todayInfo: async (_, args) => { 
             const { location, latitude, longitude } = args;
-            console.log(location,latitude,longitude)
-            const covidData = await covid19();
+            const covidData = await covid19(location);
             const { temp, weather } = await getWeather(latitude, longitude);
-            const { newCase, countryName } = covidData[location];
+            const { newCase, countryName } =  covidData;
+            
             return { newCase, countryName, temp, weather };
         }
     }
