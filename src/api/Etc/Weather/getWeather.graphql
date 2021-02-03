@@ -1,8 +1,0 @@
-type APIweather {
-  temp: String!
-  weather: String!
-}
-
-type Query {
-  weather(latitude: Float!, longitude: Float!): APIweather!
-}
