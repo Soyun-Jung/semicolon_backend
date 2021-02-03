@@ -16,6 +16,7 @@ type User {
   followersCount: Int!
   posts: [Post!]!
   likes: [Like!]!
+  iscommented: Boolean
   comments: [Comment!]!
   commentLikes: [Comment!]
   rooms: [Room!]!
