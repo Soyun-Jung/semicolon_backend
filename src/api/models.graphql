@@ -16,7 +16,6 @@ type User {
   followersCount: Int!
   posts: [Post!]!
   likes: [Like!]!
-  
   comments: [Comment!]!
   commentLikes: [Comment!]
   rooms: [Room!]!
@@ -26,6 +25,7 @@ type User {
   savedPosts: [Post!]
   state: String!
   stories: [Story!]
+  clickedStories: [Story!]
   tagedUser: [Story!]
 }
 
@@ -41,6 +41,7 @@ type Story {
   caption: String
   user: User!
   tagUser: [User!]
+  seenUsers: [User!]
   createdAt: String
   updatedAt: String
 }
@@ -93,7 +94,8 @@ type Comment {
 type File {
   id: ID!
   url: String!
-  post: Post!
+  post: Post
+  story: Story
   createdAt: String
   updatedAt: String
 }

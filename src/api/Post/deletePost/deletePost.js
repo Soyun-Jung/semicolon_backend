@@ -1,10 +1,10 @@
 import { prisma } from "../../../../generated/prisma-client";
-import { inAuthenticated } from "../../../middlewares"
+import { isAuthenticated } from "../../../middlewares"
 
 export default {
     Mutation: {
         deletePost: async (_, agrs, { request }) => {
-            inAuthenticated(request);
+            isAuthenticated(request);
             const { user } = request;
             const { id } = agrs;
             const post = await prisma.$exists.post({ AND: [{ id, user: { id: user.id } }] })
