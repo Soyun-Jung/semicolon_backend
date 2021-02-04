@@ -42,6 +42,7 @@ type Story {
   user: User!
   tagUser: [User!]
   seenUsers: [User!]
+  state: String!
   createdAt: String
   updatedAt: String
 }

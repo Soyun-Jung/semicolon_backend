@@ -36,6 +36,7 @@ type Story {
   user : User! @relation(name:"StoriesOfUser")
   tagUser : [User!] @relation(name:"TagOfStory", onDelete:CASCADE)
   seenUsers : [User!] @relation(name:"SeeUserOfStory", onDelete:CASCADE)
+  state : String! @default(value: "1")
   createdAt: DateTime! @createdAt
   updatedAt: DateTime! @updatedAt
 }
