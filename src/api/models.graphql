@@ -43,8 +43,8 @@ type Story {
   tagUser: [User!]
   seenUsers: [User!]
   state: String!
-  createdAt: String
-  updatedAt: String
+  createdAt: String!
+  updatedAt: String!
 }
 
 type Post {
