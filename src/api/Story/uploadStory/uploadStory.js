@@ -60,6 +60,8 @@ export default {
                     return true;
                 }
             }
+
+            //태그를 잘못했을 때
             catch {
                 return false;
              }
