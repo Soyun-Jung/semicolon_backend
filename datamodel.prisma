@@ -12,7 +12,7 @@ type User {
   posts: [Post!]! @relation(name:"PostsOfUser", onDelete:CASCADE)
   likes: [Like!]! @relation(name:"LikesOfUser", onDelete:CASCADE)
   comments: [Comment!]! @relation(name:"CommentsOfUser", onDelete:CASCADE)
-  commentLikes : [CommentLike!] @relation(name:"CommentLikesOfUser")
+  commentLikes : [CommentLike!] @relation(name:"CommentLikesOfUser", onDelete:CASCADE)
   rooms: [Room!]!
   savedPosts: [Post!] @relation(name:"SavedByUser")
   state : String! @default(value: "1")
@@ -66,8 +66,8 @@ type Like {
 
 type CommentLike {
   id: ID! @id
-  user: User! @relation(name:"CommentLikesOfUser")
-  comment: Comment! @relation(name:"CommentOfCommentLike")
+  user: User! @relation(name:"CommentLikesOfUser", onDelete:CASCADE)
+  comment: Comment! @relation(name:"CommentOfCommentLike", onDelete:CASCADE)
   createdAt: DateTime! @createdAt
   updatedAt: DateTime! @updatedAt
 
@@ -78,7 +78,7 @@ type Comment {
   text: String!
   user: User! @relation(name:"CommentsOfUser")
   post: Post! @relation(name:"CommentsOfPost")
-  commentLikes : [CommentLike!] @relation(name:"CommentOfCommentLike")
+  commentLikes : [CommentLike!] @relation(name:"CommentOfCommentLike", onDelete:CASCADE)
   createdAt: DateTime! @createdAt
   updatedAt: DateTime! @updatedAt
 }
