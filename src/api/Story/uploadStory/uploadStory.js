@@ -5,67 +5,68 @@ export default {
     Mutation: {
         uploadStory: async (_, args, { request }) => {
             isAuthenticated(request);
-
+            let newStory;
             const { caption, files, tagUser } = args;
             const { user } = request;
-
+            console.log(tagUser);
             try {
-                //태그한 사람이 있을 때
                 if (tagUser) {
-                    const [tag] = await prisma.user({ id: user.id }).following({ where: { username_in: tagUser } })
-            
-                    console.log(tag.username);
-
-                    const story = await prisma.createStory({
-                        tagUser: {
-                            connect: {
-                                username: tag.username
-                            }
-                        },
+                    const isFollowing = await prisma.user({ id: user.id }).following({ where: { username_in: tagUser } });
+                    console.log(isFollowing);
+                    
+                    if (isFollowing) {
+                        if (isFollowing.length === 1) {
+                             newStory = await prisma.createStory({
+                            user: { connect: { id: user.id } },
+                            tagUser: {
+                                connect: {
+                                    username: isFollowing.username
+                                }
+                            },
+                            caption
+                        })
+                        } else {
+                            newStory = await prisma.createStory({
+                            user: { connect: { id: user.id } },
+                            caption
+                            })
+                            isFollowing.map(async folloing =>
+                                await prisma.updateStory({
+                                data:{
+                                    tagUser: {
+                                        connect: {
+                                            username: folloing.username
+                                        }
+                                    },
+                                },
+                                where: { id: newStory.id }
+                            })
+                         )
+                            
+                        }
+                       
+                    }
+                    
+                } else {
+                    newStory = await prisma.createStory({
+                        user: { connect: { id: user.id } },
                         caption,
-                        user: {
-                            connect: {
-                                id: user.id
-                            }
-                        }
-                    });
-                    files.forEach(async file => await prisma.createFile({
-                        url: file,
-                        story: {
-                            connect: {
-                                id: story.id
-                            }
-                        }
-                    }));
-                    return true;
+                    })
                 }
-                //태그한 사람이 없을 때
-                else {
-                    const story = await prisma.createStory({
-                        caption,
-                        user: {
-                            connect: {
-                                id: user.id
-                            }
+                files.forEach(async file =>await prisma.createFile({
+                    url: file,
+                    story: {
+                        connect: {
+                            id: newStory.id
                         }
-                    });
-                    files.forEach(async file => await prisma.createFile({
-                        url: file,
-                        story: {
-                            connect: {
-                                id: story.id
-                            }
-                        }
-                    }));
-                    return true;
-                }
+                    }
+                }));
+                return newStory;
+            }
+            catch (e) {
+                console.log(e);
             }
 
-            //태그를 잘못했을 때
-            catch {
-                return false;
-             }
-            
         }
     }
 }

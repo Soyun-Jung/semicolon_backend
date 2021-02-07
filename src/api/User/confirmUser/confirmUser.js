@@ -18,6 +18,7 @@ export default {
             try {
                 const existingUser = await prisma.$exists.user(filterUser);
                 if (existingUser) {
+                    console.log(existingUser);
                     const user = await prisma.user({ email })
                     return generateToken(user.id);
                 } else {

@@ -17,7 +17,7 @@ type User {
   savedPosts: [Post!] @relation(name:"SavedByUser")
   state : String! @default(value: "1")
   stories : [Story!] @relation(name:"StoriesOfUser", onDelete:CASCADE)
-  tagedUser : [Story!] @relation(name:"TagOfStory")
+  tagedUser : [Story] @relation(name:"TagOfStory")
   clickedStories : [Story!] @relation(name:"SeeUserOfStory")
   createdAt: DateTime! @createdAt
   updatedAt: DateTime! @updatedAt
@@ -34,7 +34,7 @@ type Story {
   files: [File!]! @relation(name:"FilesOfStory", onDelete:CASCADE)
   caption : String
   user : User! @relation(name:"StoriesOfUser")
-  tagUser : [User!] @relation(name:"TagOfStory", onDelete:CASCADE)
+  tagUser : [User] @relation(name:"TagOfStory", onDelete:CASCADE)
   seenUsers : [User!] @relation(name:"SeeUserOfStory", onDelete:CASCADE)
   state : String! @default(value: "1")
   createdAt: DateTime! @createdAt

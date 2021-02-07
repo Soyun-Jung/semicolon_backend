@@ -24,7 +24,7 @@ type User {
   postsCount: Int!
   savedPosts: [Post!]
   state: String!
-  stories: [Story!]
+  stories: [Story]
   clickedStories: [Story!]
   tagedUser: [Story!]
 }
@@ -40,7 +40,7 @@ type Story {
   files: [File!]!
   caption: String
   user: User!
-  tagUser: [User!]
+  tagUser: [User]
   seenUsers: [User!]
   state: String!
   createdAt: String!
