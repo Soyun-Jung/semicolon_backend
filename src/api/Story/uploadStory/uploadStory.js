@@ -53,14 +53,14 @@ export default {
                         caption,
                     })
                 }
-                files.forEach(async file =>await prisma.createFile({
-                    url: file,
+                await prisma.createFile({
+                    url: files,
                     story: {
                         connect: {
                             id: newStory.id
                         }
                     }
-                }));
+                });
                 return newStory;
             }
             catch (e) {
