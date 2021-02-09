@@ -86,7 +86,7 @@ type File {
   id: ID! @id
   url: String!
   post: Post @relation(name:"FilesOfPost")
-  story: Story @relation(name:"FilesOfStory", link: INLINE)
+  story: Story @relation(name:"FilesOfStory", link: INLINE, onDelete:CASCADE)
   createdAt: DateTime! @createdAt
   updatedAt: DateTime! @updatedAt
 }
