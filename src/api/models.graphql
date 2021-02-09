@@ -37,7 +37,7 @@ type UserLogin {
 
 type Story {
   id: ID!
-  files: [File!]!
+  files: File!
   caption: String
   user: User!
   tagUser: [User]

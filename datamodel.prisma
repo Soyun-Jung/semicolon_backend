@@ -31,7 +31,7 @@ type UserLogin{
 
 type Story {
   id:ID! @id
-  files: [File!]! @relation(name:"FilesOfStory", onDelete:CASCADE)
+  files: File! @relation(name:"FilesOfStory", onDelete:CASCADE)
   caption : String
   user : User! @relation(name:"StoriesOfUser")
   tagUser : [User] @relation(name:"TagOfStory", onDelete:CASCADE)
@@ -86,7 +86,7 @@ type File {
   id: ID! @id
   url: String!
   post: Post @relation(name:"FilesOfPost")
-  story: Story @relation(name:"FilesOfStory")
+  story: Story @relation(name:"FilesOfStory", link: INLINE)
   createdAt: DateTime! @createdAt
   updatedAt: DateTime! @updatedAt
 }
