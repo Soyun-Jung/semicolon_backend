@@ -5,67 +5,71 @@ export default {
     Mutation: {
         uploadStory: async (_, args, { request }) => {
             isAuthenticated(request);
-            let newStory;
-            const { caption, files, tagUser } = args;
+            const { files, caption, tagUser } = args;
             const { user } = request;
-            console.log(tagUser);
-            try {
-                if (tagUser) {
-                    const isFollowing = await prisma.user({ id: user.id }).following({ where: { username_in: tagUser } });
-                    console.log(isFollowing);
-                    
-                    if (isFollowing) {
-                        if (isFollowing.length === 1) {
-                             newStory = await prisma.createStory({
-                            user: { connect: { id: user.id } },
-                            tagUser: {
-                                connect: {
-                                    username: isFollowing.username
-                                }
-                            },
-                            caption
-                        })
-                        } else {
-                            newStory = await prisma.createStory({
-                            user: { connect: { id: user.id } },
-                            caption
-                            })
-                            isFollowing.map(async folloing =>
-                                await prisma.updateStory({
-                                data:{
-                                    tagUser: {
-                                        connect: {
-                                            username: folloing.username
-                                        }
-                                    },
-                                },
-                                where: { id: newStory.id }
-                            })
-                         )
-                            
-                        }
-                       
-                    }
-                    
+            let newStory;
+            console.log(files);
+
+            if (tagUser) {
+                const isFollowing = await prisma.user({ id: user.id }).following({ where: { username_in: tagUser } });
+                console.log(isFollowing);
+                if (isFollowing.length === 1) {
+                    newStory = await prisma.createStory({
+                        user: {
+                            connect: {
+                                id: user.id
+                            }
+                        },
+                        tagUser: {
+                            connect: {
+                                username:isFollowing.username
+                            }
+                        },
+                        caption
+                    })      
                 } else {
                     newStory = await prisma.createStory({
-                        user: { connect: { id: user.id } },
-                        caption,
+                        user: {
+                            connect: {
+                                id:user.id
+                            }
+                        },
+                        caption
+                    })
+                    isFollowing.map(async following => await prisma.updateStory({
+                        data: {
+                            tagUser: {
+                                connect: {
+                                    username:following.username
+                                }
+                            }
+                        },
+                        where:{
+                            id:newStory.id
+                        }
+                    }))
+                }
+            } else {
+                    newStory = await prisma.createStory({
+                        user: {
+                            connect: {
+                                id:user.id
+                            }
+                        },
+                        caption
                     })
                 }
-                await prisma.createFile({
-                    url: files,
-                    story: {
-                        connect: {
-                            id: newStory.id
-                        }
+
+            await prisma.createFile({
+                url: files,
+                story: {
+                    connect: {
+                        id: newStory.id
                     }
-                });
-                return newStory;
-            }
-            catch (e) {
-                console.log(e);
-            }
+                }
+            });
+
+            return newStory;
 
         }
     }

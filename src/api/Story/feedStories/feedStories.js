@@ -8,20 +8,23 @@ export default {
             const { user } = request;
             let thereisstory = false;
            
-            let gotstory=[];
+            const gotstory=[];
 
-            //팔로잉한 사람들
             const following = await prisma.user({ id: user.id }).following();
-            following.map(follow => {
-                thereisstory = prisma.$exists.story({ user: { id: follow.id } }); 
-                
+            console.log(following);
+            following.map(async follow => {
+                thereisstory = await prisma.$exists.story({ user: { id: follow.id } }); 
+                console.log(thereisstory);
                 if (thereisstory) {
                     gotstory.push(follow.username);
+                    console.log(gotstory);
                 }
             }     
             );
 
-            return prisma.users({ where:{ username_in: gotstory } });
+            if (gotstory !== null || gotstory !== []) {
+                return prisma.users({ where:{ username_in: gotstory } });
+           }
         }
     }
 }; 

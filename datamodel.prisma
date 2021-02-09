@@ -31,7 +31,7 @@ type UserLogin{
 
 type Story {
   id:ID! @id
-  files: File! @relation(name:"FilesOfStory", onDelete:CASCADE)
+  files: File @relation(name:"FilesOfStory", onDelete:CASCADE)
   caption : String
   user : User! @relation(name:"StoriesOfUser")
   tagUser : [User] @relation(name:"TagOfStory", onDelete:CASCADE)
