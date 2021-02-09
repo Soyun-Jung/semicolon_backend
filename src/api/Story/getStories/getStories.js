@@ -6,7 +6,7 @@ export default {
         getStories: (_, args, { request }) => {
             isAuthenticated(request);
             const { id } = args;
-        console.log(id);f
+        console.log(id);
             return prisma.stories({
                 where: {
                     AND:
