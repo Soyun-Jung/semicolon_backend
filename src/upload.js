@@ -13,6 +13,7 @@ const upload = multer({
     s3,
     acl: "public-read",
     bucket: "semicolonsy",
+    contentType: multerS3.AUTO_CONTENT_TYPE,
     metadata: function(req, file, cb) {
       cb(null, { fieldName: file.fieldname });
     },
@@ -31,3 +32,19 @@ export const uploadController = (req, res) => {
 
   res.json({ location });
 };
+
+// export const postUpload = async (req, res) => {
+//   const { body: { title, description, _id }, file: { location } } = req;
+//   const { user } = req;
+//   console.log(file)
+  
+//     const newVideo = await Video.create({
+//       fileUrl: path,
+//       fileUrl: location,
+//       title: title,
+//       description: description,
+//     })
+
+//     res.json({ location });
+  
+// }

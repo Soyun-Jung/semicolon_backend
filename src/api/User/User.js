@@ -51,9 +51,10 @@ export default {
             const { user } = request;
             const { id: parentId } = parent;
             return user.id === parentId;
-        }
+        },
     },
     Story: {
-        files:({ id }) => prisma.story({ id }).files()
+        files: ({ id }) => prisma.story({ id }).files(),
+        user: ({ id }) => prisma.story({ id }).user(),
     }
 };

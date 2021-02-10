@@ -59,7 +59,7 @@ export default {
                         caption
                     })
                 }
-
+            
             await prisma.createFile({
                 url: files,
                 story: {
