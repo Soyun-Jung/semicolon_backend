@@ -95,6 +95,7 @@ type Comment {
 type File {
   id: ID!
   url: String!
+  type: String!
   post: Post
   story: Story
   createdAt: String

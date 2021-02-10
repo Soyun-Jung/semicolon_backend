@@ -85,6 +85,7 @@ type Comment {
 type File {
   id: ID! @id
   url: String!
+  type: String! @default(value: "image")
   post: Post @relation(name:"FilesOfPost")
   story: Story @relation(name:"FilesOfStory", link: INLINE, onDelete:CASCADE)
   createdAt: DateTime! @createdAt
