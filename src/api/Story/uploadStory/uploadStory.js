@@ -5,7 +5,7 @@ export default {
     Mutation: {
         uploadStory: async (_, args, { request }) => {
             isAuthenticated(request);
-            const { files, caption, tagUser } = args;
+            const { files, caption, tagUser, type } = args;
             const { user } = request;
             let newStory;
             console.log(files);
@@ -62,6 +62,7 @@ export default {
             
             await prisma.createFile({
                 url: files,
+                type:type,
                 story: {
                     connect: {
                         id: newStory.id

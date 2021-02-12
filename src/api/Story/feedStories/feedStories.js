@@ -11,7 +11,14 @@ export default {
             const following = await prisma.user({ id: user.id }).following();
             
             //const gotstory = await prisma.users({where:{}})
-            const gotstory = await prisma.stories({ where: { user: { username_in: following.username } } }).user();
+            const gotstory = await prisma.stories({
+                 where:
+                {
+                    AND: [
+                    { user: { username_in: following.username } },
+                    { state: "1" }]
+                }
+            }).user();
             
             gotstory.map(info => {
                 if (info.user.id !== user.id) {
