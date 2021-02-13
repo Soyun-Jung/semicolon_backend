@@ -27,6 +27,13 @@ type User {
   stories: [Story]
   clickedStories: [Story!]
   tagedUser: [Story!]
+  recommendation: Recommendation
+}
+
+type Recommendation {
+  id: ID!
+  user: User!
+  post: [Post]
 }
 
 type UserLogin {
@@ -63,6 +70,7 @@ type Post {
   state: String!
   savedByUser: [User!]
   hash: [String!]!
+  recommendation: [Recommendation]
 }
 
 type Like {
