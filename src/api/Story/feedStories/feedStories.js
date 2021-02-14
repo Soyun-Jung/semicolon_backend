@@ -1,4 +1,5 @@
 import { prisma } from "../../../../generated/prisma-client";
+import { STORYUSER_FRAGMENT } from "../../../fragments";
 import { isAuthenticated } from "../../../middlewares"
 
 export default {
@@ -7,19 +8,25 @@ export default {
             isAuthenticated(request);
             const { user } = request;
             const sliejls=[];
+            const dhodkseho = [];
 
-            const following = await prisma.user({ id: user.id }).following();
-            
+            const username = await prisma.user({ id: user.id }).following().$fragment(STORYUSER_FRAGMENT)
+            username.map(user => {
+                dhodkseho.push(user.username);
+            })
             //const gotstory = await prisma.users({where:{}})
-            const gotstory = await prisma.stories({
+            console.log(dhodkseho);
+               const gotstory = await prisma.stories({
                  where:
                 {
                     AND: [
-                    { user: { username_in: following.username } },
+                        { user: { username_in: dhodkseho } },
                     { state: "1" }]
                 }
             }).user();
+          
             
+            //console.log(gotstory);
             gotstory.map(info => {
                 if (info.user.id !== user.id) {
                     // if (같으면) {
@@ -34,7 +41,7 @@ export default {
                      seen.add(el.id);
                  return !duplicate;
            });
-            console.log(filteredArr);
+            console.log("스토리있는내팔로우들!",filteredArr);
             return filteredArr;
         }
     }

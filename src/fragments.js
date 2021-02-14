@@ -64,3 +64,11 @@ export const ROOM_FRAGMENT = `
         }
     }
 `;
+
+export const STORYUSER_FRAGMENT = `
+    fragment UserParts on User {
+       
+           username
+        
+    }
+`;
