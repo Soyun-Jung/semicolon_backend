@@ -16,10 +16,12 @@ export default {
                 ]
             };
             try {
+
                 const existingUser = await prisma.$exists.user(filterUser);
+                console.log(existingUser)
                 if (existingUser) {
-                    console.log(existingUser);
                     const user = await prisma.user({ email })
+                    console.log(generateToken(user.id));
                     return generateToken(user.id);
                 } else {
                     return "TryAgain"
