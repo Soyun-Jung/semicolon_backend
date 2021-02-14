@@ -6,7 +6,7 @@ export default {
         getStories: async (_, args, { request }) => {
             isAuthenticated(request);
             const { id } = args;
-        console.log(id);
+            console.log("id",id);
             return await prisma.stories({
                 where: {
                     AND:

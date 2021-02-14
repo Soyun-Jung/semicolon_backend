@@ -22,7 +22,7 @@ export default {
                     const user = await prisma.user({ email })
                     return generateToken(user.id);
                 } else {
-                    return "츄라이 츄라이 어게인"
+                    return "TryAgain"
                 }
             } catch (e) {
                 console.log(e);
