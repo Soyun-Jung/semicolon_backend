@@ -6,6 +6,7 @@ export default {
     comments: ({ id }) => prisma.post({ id }).comments(),
     user: ({ id }) => prisma.post({ id }).user(),
     likes: ({ id }) => prisma.post({ id }).likes(),
+    hashes: ({ id }) => prisma.post({ id }).hashes(),
     isLiked: (parent, _, { request }) => {
       const { user } = request;
       const { id } = parent;
@@ -60,6 +61,6 @@ export default {
       });
     }
   },
-  hashes: ({ id }) => prisma.post({ id }).hashes(),
+  
     
 };
