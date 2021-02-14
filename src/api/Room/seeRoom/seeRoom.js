@@ -1,5 +1,4 @@
 import { prisma } from "../../../../generated/prisma-client";
-//import { ROOM_FRAGMENT } from "../../../fragments";
 import { isAuthenticated } from "../../../middlewares"
 
 export default {

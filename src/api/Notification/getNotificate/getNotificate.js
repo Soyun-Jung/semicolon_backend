@@ -3,12 +3,12 @@ import { isAuthenticated } from "../../../middlewares"
 
 export default {
     Query: {
-        seeRooms: (_, __, { request }) => {
+        getNotificate: (_, __, { request }) => {
             isAuthenticated(request);
             const { user } = request;
-            return prisma.rooms({
+            return prisma.notifications({
                 where: {
-                    participants_some: {
+                    to: {
                         id: user.id
                     }
                 }

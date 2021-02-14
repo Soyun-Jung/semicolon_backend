@@ -20,6 +20,9 @@ type User {
   tagedUser : [Story] @relation(name:"TagOfStory")
   clickedStories : [Story!] @relation(name:"SeeUserOfStory")
   recommendation: Recommendation @relation(name:"RecommendationOfUser")
+  notifications: [Notification] @relation(name:"NotificationOfUser")
+  whofollow : [Notification] @relation(name:"NotificationOfFrom")
+  moToken : String
   createdAt: DateTime! @createdAt
   updatedAt: DateTime! @updatedAt
 }
@@ -59,11 +62,20 @@ type Post {
   likes: [Like!]! @relation(name:"LikeOfPost", onDelete:CASCADE)
   comments: [Comment!]! @relation(name:"CommentsOfPost", onDelete:CASCADE)
   state : String! @default(value: "1")
-  hash : [String!]! @scalarList(strategy: RELATION)
-  
+  hashes : [Hash!]! @relation(name:"Hashofpost", onDelete:CASCADE)
+  notifications: [Notification] @relation(name:"NotificationOfPost") 
   createdAt: DateTime! @createdAt
   updatedAt: DateTime! @updatedAt
 }
+
+type Hash{
+  id:ID! @id
+  tag: String!
+  post: Post! @relation(name:"Hashofpost")
+  createdAt: DateTime! @createdAt
+  updatedAt: DateTime! @updatedAt
+}
+
 
 type Like {
   id: ID! @id
@@ -105,6 +117,7 @@ type Room {
   id: ID! @id
   participants: [User!]!
   messages: [Message!]!
+  notifications: [Notification] @relation(name:"NotificationOfRoom")
   createdAt: DateTime! @createdAt
   updatedAt: DateTime! @updatedAt
 }
@@ -115,6 +128,16 @@ type Message {
   from: User! @relation(name: "From")
   to: User! @relation(name: "To")
   room: Room!
+  createdAt: DateTime! @createdAt
+  updatedAt: DateTime! @updatedAt
+}
+
+type Notification {
+  id: ID! @id
+  to: User @relation(name:"NotificationOfUser")
+  from : User @relation(name:"NotificationOfFrom")
+  message : Room @relation(name:"NotificationOfRoom")
+  post : Post @relation(name:"NotificationOfPost")
   createdAt: DateTime! @createdAt
   updatedAt: DateTime! @updatedAt
 }

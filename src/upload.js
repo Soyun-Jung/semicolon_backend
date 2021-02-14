@@ -12,39 +12,61 @@ const upload = multer({
   storage: multerS3({
     s3,
     acl: "public-read",
-    bucket: "semicolonsy",
-    contentType: multerS3.AUTO_CONTENT_TYPE,
-    metadata: function(req, file, cb) {
+    bucket: "teamsemicolon",
+    metadata: function (req, file, cb) {
       cb(null, { fieldName: file.fieldname });
     },
-    key: function(req, file, cb) {
+    key: function (req, file, cb) {
       cb(null, Date.now().toString());
     }
-  })
+  }),
+  // 10MB
+  limits: { fileSize: 1024 * 1024 * 10 },
 });
+// can upload 10 files
+export const uploadMiddleware = upload.array("file", 10);
 
-export const uploadMiddleware = upload.single("file");
-
-export const uploadController = (req, res) => {
+// a file upload (single)
+export const uploadSingleController = (req, res) => {
   const {
     file: { location }
   } = req;
-
+  
   res.json({ location });
 };
 
-// export const postUpload = async (req, res) => {
-//   const { body: { title, description, _id }, file: { location } } = req;
-//   const { user } = req;
-//   console.log(file)
-  
-//     const newVideo = await Video.create({
-//       fileUrl: path,
-//       fileUrl: location,
-//       title: title,
-//       description: description,
-//     })
-
-//     res.json({ location });
-  
-// }
+// files upload (array)
+export const uploadArrayController = async (req, res, { error }) => {
+    if (error) {
+      console.log('errors', error);
+      res.status(500).json({
+        status: 'fail',
+        error: error
+      });
+    } else {
+      // If File not found
+      if (req.files === undefined) {
+        console.log('uploadProductsImages Error: No File Selected!');
+        res.status(500).json({
+          status: 'fail',
+          message: 'Error: No File Selected'
+        });
+      } else {
+        // If Success
+        let fileArray = req.files,
+          fileLocation;
+        const images = [];
+        for (let i = 0; i < fileArray.length; i++) {
+          fileLocation = fileArray[i].location;
+          console.log('Upload : ', fileLocation);
+          images.push(fileLocation)
+        }
+        // Save the file name into database
+        return res.status(200).json({
+          status: 'ok',
+          filesArray: fileArray,
+          locationArray: images
+        });
+      }
+    }
+};

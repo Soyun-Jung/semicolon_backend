@@ -1,11 +1,12 @@
 import { prisma } from "../../../../generated/prisma-client";
-import { isAuthenticated } from "../../../middlewares";
+// import { isAuthenticated } from "../../../middlewares";
 
 export default {
     Subscription: {
         notificateMsg: {
-            subscribe: (_, args) => {
-                //isAuthenticated(request);
+            subscribe: (_, args, { request }) => {
+                // 보안필요없을듯
+                // isAuthenticated(request);
                 const { roomId } = args;
                 return prisma.$subscribe.message({
                     AND: [

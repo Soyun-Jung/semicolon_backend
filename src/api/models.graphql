@@ -28,6 +28,9 @@ type User {
   clickedStories: [Story!]
   tagedUser: [Story!]
   recommendation: Recommendation
+  notifications: [Notification]
+  whofollow: [Notification]
+  moToken: String
 }
 
 type Recommendation {
@@ -40,6 +43,14 @@ type UserLogin {
   id: ID!
   email: String!
   loginSecret: String
+}
+
+type Hash {
+  id: ID!
+  tag: String!
+  post: Post!
+  createdAt: String
+  updatedAt: String
 }
 
 type Story {
@@ -69,8 +80,20 @@ type Post {
   updatedAt: String
   state: String!
   savedByUser: [User!]
-  hash: [String!]!
+  hashes: [Hash!]!
+  notifications: [Notification]
   recommendation: [Recommendation]
+}
+
+type Notification {
+  id: ID!
+  to: User
+  from: User
+  message: Room
+  post: Post
+  state: String!
+  createdAt: String
+  updatedAt: String
 }
 
 type Like {
@@ -114,6 +137,7 @@ type Room {
   id: ID!
   participants: [User!]!
   messages: [Message!]!
+  notifications: [Notification]
   createdAt: String
   updatedAt: String
 }
