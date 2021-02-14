@@ -59,6 +59,7 @@ export default {
         ]
       });
     }
-  }
+  },
+  hashes: ({ id }) => prisma.post({ id }).hashes(),
     
 };
