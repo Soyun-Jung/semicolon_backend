@@ -80,7 +80,7 @@ type Post {
   updatedAt: String
   state: String!
   savedByUser: [User!]
-  hashes: [Hash!]!
+  hashes: [Hash!]
   notifications: [Notification]
   recommendation: [Recommendation]
 }

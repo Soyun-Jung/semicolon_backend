@@ -62,7 +62,7 @@ type Post {
   likes: [Like!]! @relation(name:"LikeOfPost", onDelete:CASCADE)
   comments: [Comment!]! @relation(name:"CommentsOfPost", onDelete:CASCADE)
   state : String! @default(value: "1")
-  hashes : [Hash!]! @relation(name:"Hashofpost", onDelete:CASCADE)
+  hashes : [Hash!] @relation(name:"Hashofpost", onDelete:CASCADE)
   notifications: [Notification] @relation(name:"NotificationOfPost") 
   createdAt: DateTime! @createdAt
   updatedAt: DateTime! @updatedAt
