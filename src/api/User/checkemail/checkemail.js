@@ -1,11 +1,16 @@
 import { prisma } from "../../../../generated/prisma-client";
 
 export default {
-    Query: {
-        checkemail: (_, args) => {
+    Mutation: {
+        checkemail: async (_, args) => {
             const { email } = args;
-            console.log(email);
-            return prisma.$exists.user({ email });
+
+            const exists = await prisma.$exists.user({ email });
+            if (exists) {
+                return true;
+            } else {
+                return false
+            }
         }
     }
 }
