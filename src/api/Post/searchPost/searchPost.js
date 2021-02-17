@@ -8,8 +8,13 @@ export default {
                 return prisma.posts({
                     where: {
                         OR: [
-                            { hashes_some: term },
-                            { location_starts_with: term }]
+                            { location_starts_with: term },
+                            {
+                                hashes_some: {
+                                    tag: term
+                                }
+                            }
+                        ]
                     }
                 })
             } catch (e) {
