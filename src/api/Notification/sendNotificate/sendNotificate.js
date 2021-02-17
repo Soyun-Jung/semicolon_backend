@@ -34,7 +34,7 @@ export default {
                 }
             } else if (state === "2") {
                 try {
-                    if (!await prisma.$exists.notification({ message: { id: message.id } })) {
+                    if (!await prisma.$exists.notification({ message: { id: message } })) {
                         await prisma.createNotification({
                             to: { connect: { id: to } },
                             message: { connect: { id: message } },

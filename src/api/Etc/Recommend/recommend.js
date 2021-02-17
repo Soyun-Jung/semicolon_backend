@@ -1,10 +1,19 @@
-import { getRecommend } from "../../../start";
+import { getRecommendation } from "../../../recommendation";
+import { isAuthenticated } from "../../../middlewares";
+import { prisma } from "../../../../generated/prisma-client";
 
 export default {
     Query: { 
-        Recommendation: async (_, args, { request }) => { 
-            const { data } = await getRecommend();
-            return data;
+        getRecommendation: async(_, args, { request }) => { 
+            isAuthenticated(request);
+            const { user: { id } } = request;
+            const data = await getRecommendation();
+            const arr = data[id]
+            const recoPosts = arr.map(async(a) => { 
+               return await prisma.post({id:a})
+            })
+            
+            return recoPosts;
         }
     }
 }

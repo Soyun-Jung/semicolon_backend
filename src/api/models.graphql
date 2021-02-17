@@ -27,16 +27,9 @@ type User {
   stories: [Story]
   clickedStories: [Story!]
   tagedUser: [Story!]
-  recommendation: Recommendation
   notifications: [Notification]
   whofollow: [Notification]
   moToken: String
-}
-
-type Recommendation {
-  id: ID!
-  user: User!
-  post: [Post]
 }
 
 type UserLogin {
@@ -82,7 +75,6 @@ type Post {
   savedByUser: [User!]
   hashes: [Hash!]
   notifications: [Notification]
-  recommendation: [Recommendation]
 }
 
 type Notification {

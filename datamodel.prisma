@@ -19,18 +19,11 @@ type User {
   stories : [Story!] @relation(name:"StoriesOfUser", onDelete:CASCADE)
   tagedUser : [Story] @relation(name:"TagOfStory")
   clickedStories : [Story!] @relation(name:"SeeUserOfStory")
-  recommendation: Recommendation @relation(name:"RecommendationOfUser")
   notifications: [Notification] @relation(name:"NotificationOfUser")
   whofollow : [Notification] @relation(name:"NotificationOfFrom")
   moToken : String
   createdAt: DateTime! @createdAt
   updatedAt: DateTime! @updatedAt
-}
-
-type Recommendation{
-  id: ID! @id
-  user : User! @relation(name:"RecommendationOfUser", link:INLINE)
-  post : [Post] @relation(name:"RecommendationOfPost")
 }
 
 type UserLogin{
@@ -55,7 +48,6 @@ type Post {
   id: ID! @id
   location: String
   caption: String!
-  recommendation : [Recommendation] @relation(name:"RecommendationOfPost")
   savedByUser : [User!] @relation(name:"SavedByUser")
   user: User! @relation(name:"PostsOfUser")
   files: [File!]! @relation(name:"FilesOfPost", onDelete:CASCADE)
