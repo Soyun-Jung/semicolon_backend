@@ -4,7 +4,7 @@ import { prisma } from "../../../../generated/prisma-client";
 
 export default {
     Query: { 
-        getRecommendation: async(_, args, { request }) => { 
+        getRecommendation: async(_, __, { request }) => { 
             isAuthenticated(request);
             const { user: { id } } = request;
             const data = await getRecommendation();
