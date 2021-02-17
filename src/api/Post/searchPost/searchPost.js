@@ -8,7 +8,7 @@ export default {
                 return prisma.posts({
                     where: {
                         OR: [
-                            { caption_contains: term },
+                            { hashes_some: term },
                             { location_starts_with: term }]
                     }
                 })
