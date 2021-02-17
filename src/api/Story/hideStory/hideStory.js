@@ -8,8 +8,7 @@ export default {
             const { id } = agrs;
 
             try {
-                await prisma.updateManyStories({
-                    data: { state: "0" },
+                await prisma.deleteManyStories({
                     where: {
                         user: { id }
                     }
