@@ -9,9 +9,9 @@ export default {
 
             try {
                 await prisma.deleteManyStories({
-                    where: {
+                   
                         user: { id }
-                    }
+                   
                 })
                 return true;
             } catch (e) {
