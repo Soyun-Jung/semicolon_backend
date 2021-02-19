@@ -31,11 +31,13 @@ export default {
             const { email } = args;
             const loginSecret = generateSecret();
             const exitst = await prisma.$exists.userLogin({ email });
+            await sendSecretMail(email, loginSecret);
             console.log(loginSecret);
             if (exitst) {
                 return false
 
             } else {
+
                 await prisma.createUserLogin({ email });
                 await prisma.updateUserLogin({ data: { loginSecret }, where: { email } })
                 return true;
