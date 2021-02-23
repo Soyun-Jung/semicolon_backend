@@ -27,7 +27,7 @@ export default {
     Mutation: {
         findrequestSecret: async (_, args) => {
             const { email } = args;
-            console.log(email)
+            console.log(email);
             const loginSecret = generateSecret();
             await prisma.updateUserLogin({ data: { loginSecret }, where: { email } })
             return true;
